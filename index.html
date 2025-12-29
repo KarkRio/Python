@@ -1,0 +1,2121 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🐍 Cheatsheet Python Completa</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Inter:wght@300;400;500;600;700&display=swap">
+    <style>
+        :root {
+            /* Cores Python */
+            --python-blue: #306998;
+            --python-yellow: #FFD43B;
+            --python-dark: #1a1a2e;
+            --python-darker: #0f0f1c;
+            --python-light: #4B8BBE;
+            --python-lighter: #646FD4;
+            
+            /* Tons neutros */
+            --gray-100: #f8f9fa;
+            --gray-200: #e9ecef;
+            --gray-300: #dee2e6;
+            --gray-400: #ced4da;
+            --gray-500: #adb5bd;
+            --gray-600: #6c757d;
+            --gray-700: #495057;
+            --gray-800: #343a40;
+            --gray-900: #212529;
+            
+            /* Cores de badge */
+            --basic-color: #10b981;
+            --intermediate-color: #3b82f6;
+            --advanced-color: #8b5cf6;
+            --tools-color: #f59e0b;
+            
+            /* Layout */
+            --sidebar-width: 280px;
+            --header-height: 70px;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--python-darker);
+            color: var(--gray-200);
+            line-height: 1.6;
+            display: flex;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        /* Sidebar */
+        #sidebar {
+            width: var(--sidebar-width);
+            background-color: var(--python-dark);
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            transition: transform 0.3s ease;
+            z-index: 1000;
+            box-shadow: 4px 0 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .sidebar-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 1rem;
+        }
+        
+        .logo-icon {
+            font-size: 2.5rem;
+            color: var(--python-yellow);
+        }
+        
+        .logo h1 {
+            font-size: 1.5rem;
+            color: white;
+            font-weight: 700;
+        }
+        
+        .sidebar-nav {
+            padding: 1rem 0;
+        }
+        
+        .nav-section {
+            margin-bottom: 1.5rem;
+        }
+        
+        .nav-title {
+            padding: 0.5rem 1.5rem;
+            color: var(--python-yellow);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+        
+        .nav-links {
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-bottom: 2px;
+        }
+        
+        .nav-links a {
+            display: block;
+            padding: 0.75rem 1.5rem;
+            color: var(--gray-400);
+            text-decoration: none;
+            transition: all 0.2s ease;
+            border-left: 3px solid transparent;
+        }
+        
+        .nav-links a:hover {
+            background-color: rgba(255, 255, 255, 0.05);
+            color: white;
+            border-left-color: var(--python-light);
+        }
+        
+        .nav-links a.active {
+            background-color: rgba(48, 105, 152, 0.2);
+            color: white;
+            border-left-color: var(--python-yellow);
+        }
+        
+        /* Main Content */
+        #main-content {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            padding: 2rem;
+            transition: margin-left 0.3s ease;
+        }
+        
+        /* Header */
+        .main-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .header-left h2 {
+            font-size: 1.8rem;
+            color: white;
+        }
+        
+        .header-left p {
+            color: var(--gray-500);
+            margin-top: 0.25rem;
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+        
+        /* Stats Bar */
+        .stats-bar {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        .stat-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 1rem 1.5rem;
+            min-width: 180px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: white;
+            display: block;
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--gray-500);
+        }
+        
+        /* Search Bar */
+        .search-container {
+            margin-bottom: 2rem;
+        }
+        
+        .search-box {
+            position: relative;
+        }
+        
+        .search-box input {
+            width: 100%;
+            padding: 1rem 1rem 1rem 3rem;
+            background-color: rgba(255, 255, 255, 0.07);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            color: white;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .search-box input:focus {
+            outline: none;
+            border-color: var(--python-light);
+            box-shadow: 0 0 0 2px rgba(75, 139, 190, 0.2);
+        }
+        
+        .search-box i {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray-500);
+        }
+        
+        /* Level Filter */
+        .level-filter {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        .level-btn {
+            padding: 0.5rem 1.5rem;
+            background-color: rgba(255, 255, 255, 0.07);
+            border: 2px solid transparent;
+            border-radius: 50px;
+            color: var(--gray-400);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-weight: 500;
+        }
+        
+        .level-btn.active {
+            color: white;
+        }
+        
+        .level-btn.basic.active {
+            background-color: rgba(16, 185, 129, 0.2);
+            border-color: var(--basic-color);
+        }
+        
+        .level-btn.intermediate.active {
+            background-color: rgba(59, 130, 246, 0.2);
+            border-color: var(--intermediate-color);
+        }
+        
+        .level-btn.advanced.active {
+            background-color: rgba(139, 92, 246, 0.2);
+            border-color: var(--advanced-color);
+        }
+        
+        .level-btn.tools.active {
+            background-color: rgba(245, 158, 11, 0.2);
+            border-color: var(--tools-color);
+        }
+        
+        /* Content Grid */
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+        
+        /* Category Card */
+        .category-card {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .category-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+        
+        .card-header {
+            padding: 1.5rem;
+            background-color: rgba(0, 0, 0, 0.2);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .card-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+        
+        .card-title h3 {
+            font-size: 1.3rem;
+            color: white;
+        }
+        
+        .level-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        
+        .basic-badge {
+            background-color: rgba(16, 185, 129, 0.2);
+            color: var(--basic-color);
+        }
+        
+        .intermediate-badge {
+            background-color: rgba(59, 130, 246, 0.2);
+            color: var(--intermediate-color);
+        }
+        
+        .advanced-badge {
+            background-color: rgba(139, 92, 246, 0.2);
+            color: var(--advanced-color);
+        }
+        
+        .tools-badge {
+            background-color: rgba(245, 158, 11, 0.2);
+            color: var(--tools-color);
+        }
+        
+        .card-description {
+            color: var(--gray-500);
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+        }
+        
+        .toggle-examples-btn {
+            background-color: rgba(48, 105, 152, 0.3);
+            color: var(--python-light);
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: background-color 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .toggle-examples-btn:hover {
+            background-color: rgba(48, 105, 152, 0.5);
+        }
+        
+        .card-content {
+            padding: 0 1.5rem 1.5rem;
+        }
+        
+        /* Methods List */
+        .methods-list {
+            list-style: none;
+        }
+        
+        .method-item {
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .method-item:last-child {
+            border-bottom: none;
+        }
+        
+        .method-name {
+            color: var(--python-yellow);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.95rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .copy-btn {
+            background: none;
+            border: none;
+            color: var(--gray-500);
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: color 0.2s ease;
+            padding: 0.25rem;
+        }
+        
+        .copy-btn:hover {
+            color: var(--python-yellow);
+        }
+        
+        .method-description {
+            color: var(--gray-400);
+            font-size: 0.9rem;
+            margin-bottom: 0.75rem;
+        }
+        
+        .method-example {
+            background-color: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-top: 0.75rem;
+            display: none;
+            overflow-x: auto;
+        }
+        
+        .method-example.show {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        pre {
+            margin: 0;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            line-height: 1.5;
+        }
+        
+        .keyword { color: #ff79c6; }
+        .function { color: #50fa7b; }
+        .string { color: #f1fa8c; }
+        .number { color: #bd93f9; }
+        .comment { color: #6272a4; }
+        .builtin { color: #8be9fd; }
+        
+        /* Floating Copy Button */
+        .floating-copy {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background-color: var(--python-blue);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(48, 105, 152, 0.4);
+            transition: all 0.3s ease;
+            z-index: 999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+        
+        .floating-copy:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(48, 105, 152, 0.6);
+        }
+        
+        /* Notification */
+        .notification {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background-color: var(--python-blue);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            z-index: 1001;
+            transition: transform 0.3s ease;
+        }
+        
+        .notification.show {
+            transform: translateX(-50%) translateY(0);
+        }
+        
+        /* No Results */
+        .no-results {
+            text-align: center;
+            padding: 3rem;
+            grid-column: 1 / -1;
+            color: var(--gray-500);
+        }
+        
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .content-grid {
+                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            }
+        }
+        
+        @media (max-width: 992px) {
+            #sidebar {
+                transform: translateX(-100%);
+            }
+            
+            #sidebar.active {
+                transform: translateX(0);
+            }
+            
+            #main-content {
+                margin-left: 0;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .stats-bar {
+                justify-content: center;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            #main-content {
+                padding: 1rem;
+            }
+            
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .stat-card {
+                min-width: 140px;
+            }
+            
+            .floating-copy {
+                bottom: 1rem;
+                right: 1rem;
+                width: 50px;
+                height: 50px;
+                font-size: 1.2rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .main-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+            
+            .level-filter {
+                justify-content: center;
+            }
+            
+            .level-btn {
+                padding: 0.5rem 1rem;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <aside id="sidebar">
+        <div class="sidebar-header">
+            <div class="logo">
+                <div class="logo-icon">🐍</div>
+                <h1>Python Cheatsheet</h1>
+            </div>
+            <p>Referência completa de Python</p>
+        </div>
+        
+        <nav class="sidebar-nav">
+            <div class="nav-section">
+                <div class="nav-title">Níveis</div>
+                <ul class="nav-links">
+                    <li><a href="#basico" class="active" data-level="basic"><i class="fas fa-graduation-cap"></i> Básico</a></li>
+                    <li><a href="#intermediario" data-level="intermediate"><i class="fas fa-chart-line"></i> Intermediário</a></li>
+                    <li><a href="#avancado" data-level="advanced"><i class="fas fa-rocket"></i> Avançado</a></li>
+                    <li><a href="#ferramentas" data-level="tools"><i class="fas fa-tools"></i> Ferramentas</a></li>
+                </ul>
+            </div>
+            
+            <div class="nav-section">
+                <div class="nav-title">Categorias</div>
+                <ul class="nav-links" id="category-links">
+                    <!-- Categorias serão geradas via JavaScript -->
+                </ul>
+            </div>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main id="main-content">
+        <header class="main-header">
+            <div class="header-left">
+                <h2>Cheatsheet Python Completa</h2>
+                <p>Referência rápida com mais de 500 métodos e funções</p>
+            </div>
+            <button class="mobile-menu-btn" id="mobile-menu-toggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </header>
+
+        <!-- Stats Bar -->
+        <div class="stats-bar">
+            <div class="stat-card">
+                <span class="stat-value" id="total-methods">0</span>
+                <span class="stat-label">Métodos/Funções</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-value" id="total-categories">0</span>
+                <span class="stat-label">Categorias</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-value" id="total-levels">4</span>
+                <span class="stat-label">Níveis</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-value" id="total-examples">0</span>
+                <span class="stat-label">Exemplos</span>
+            </div>
+        </div>
+
+        <!-- Search -->
+        <div class="search-container">
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" id="search-input" placeholder="Buscar métodos ou categorias...">
+            </div>
+        </div>
+
+        <!-- Level Filter -->
+        <div class="level-filter">
+            <button class="level-btn basic active" data-level="basic">Básico</button>
+            <button class="level-btn intermediate" data-level="intermediate">Intermediário</button>
+            <button class="level-btn advanced" data-level="advanced">Avançado</button>
+            <button class="level-btn tools" data-level="tools">Ferramentas</button>
+        </div>
+
+        <!-- Content Grid -->
+        <div class="content-grid" id="content-grid">
+            <!-- As categorias serão geradas via JavaScript -->
+        </div>
+    </main>
+
+    <!-- Floating Copy Button -->
+    <button class="floating-copy" id="floating-copy" title="Copiar todos os exemplos">
+        <i class="fas fa-copy"></i>
+    </button>
+
+    <!-- Notification -->
+    <div class="notification" id="notification">
+        Código copiado para a área de transferência!
+    </div>
+
+    <script>
+        // Dados da cheatsheet
+        const cheatsheetData = {
+            basic: [
+                {
+                    id: "strings",
+                    title: "Strings",
+                    description: "Manipulação de texto e métodos de strings",
+                    level: "basic",
+                    methods: [
+                        {
+                            name: "str.upper()",
+                            description: "Converte todos os caracteres para maiúsculas",
+                            example: `texto = "Python é incrível"
+resultado = texto.upper()
+# Resultado: "PYTHON É INCRÍVEL"`
+                        },
+                        {
+                            name: "str.lower()",
+                            description: "Converte todos os caracteres para minúsculas",
+                            example: `texto = "PYTHON É INCRÍVEL"
+resultado = texto.lower()
+# Resultado: "python é incrível"`
+                        },
+                        {
+                            name: "str.strip()",
+                            description: "Remove espaços em branco do início e fim",
+                            example: `texto = "  Python  "
+resultado = texto.strip()
+# Resultado: "Python"`
+                        },
+                        {
+                            name: "str.split()",
+                            description: "Divide a string em uma lista usando um separador",
+                            example: `texto = "maçã,banana,laranja"
+resultado = texto.split(",")
+# Resultado: ["maçã", "banana", "laranja"]`
+                        },
+                        {
+                            name: "str.replace()",
+                            description: "Substitui todas as ocorrências de uma substring",
+                            example: `texto = "Olá mundo"
+resultado = texto.replace("mundo", "Python")
+# Resultado: "Olá Python"`
+                        }
+                    ]
+                },
+                {
+                    id: "listas",
+                    title: "Listas",
+                    description: "Métodos para manipulação de listas",
+                    level: "basic",
+                    methods: [
+                        {
+                            name: "list.append()",
+                            description: "Adiciona um elemento ao final da lista",
+                            example: `lista = [1, 2, 3]
+lista.append(4)
+# Resultado: [1, 2, 3, 4]`
+                        },
+                        {
+                            name: "list.extend()",
+                            description: "Adiciona elementos de outra lista",
+                            example: `lista1 = [1, 2]
+lista2 = [3, 4]
+lista1.extend(lista2)
+# Resultado: [1, 2, 3, 4]`
+                        },
+                        {
+                            name: "list.insert()",
+                            description: "Insere elemento em posição específica",
+                            example: `lista = [1, 2, 4]
+lista.insert(2, 3)
+# Resultado: [1, 2, 3, 4]`
+                        },
+                        {
+                            name: "list.remove()",
+                            description: "Remove a primeira ocorrência de um valor",
+                            example: `lista = [1, 2, 3, 2]
+lista.remove(2)
+# Resultado: [1, 3, 2]`
+                        },
+                        {
+                            name: "list.pop()",
+                            description: "Remove e retorna elemento de uma posição",
+                            example: `lista = [1, 2, 3]
+elemento = lista.pop(1)
+# elemento = 2, lista = [1, 3]`
+                        }
+                    ]
+                },
+                {
+                    id: "dicionarios",
+                    title: "Dicionários",
+                    description: "Manipulação de estruturas chave-valor",
+                    level: "basic",
+                    methods: [
+                        {
+                            name: "dict.get()",
+                            description: "Retorna valor da chave ou valor padrão",
+                            example: `dados = {"nome": "Ana", "idade": 30}
+nome = dados.get("nome")
+email = dados.get("email", "não informado")
+# nome = "Ana", email = "não informado"`
+                        },
+                        {
+                            name: "dict.keys()",
+                            description: "Retorna visualização das chaves do dicionário",
+                            example: `dados = {"nome": "Ana", "idade": 30}
+chaves = list(dados.keys())
+# Resultado: ["nome", "idade"]`
+                        },
+                        {
+                            name: "dict.values()",
+                            description: "Retorna visualização dos valores do dicionário",
+                            example: `dados = {"nome": "Ana", "idade": 30}
+valores = list(dados.values())
+# Resultado: ["Ana", 30]`
+                        },
+                        {
+                            name: "dict.items()",
+                            description: "Retorna visualização de pares chave-valor",
+                            example: `dados = {"nome": "Ana", "idade": 30}
+for chave, valor in dados.items():
+    print(f"{chave}: {valor}")
+# Saída: nome: Ana, idade: 30`
+                        },
+                        {
+                            name: "dict.update()",
+                            description: "Atualiza dicionário com outro dicionário",
+                            example: `dados = {"nome": "Ana"}
+dados.update({"idade": 30, "cidade": "SP"})
+# Resultado: {"nome": "Ana", "idade": 30, "cidade": "SP"}`
+                        }
+                    ]
+                },
+                {
+                    id: "tuplas",
+                    title: "Tuplas",
+                    description: "Sequências imutáveis de elementos",
+                    level: "basic",
+                    methods: [
+                        {
+                            name: "tuple()",
+                            description: "Converte iterável em tupla",
+                            example: `lista = [1, 2, 3]
+tupla = tuple(lista)
+# Resultado: (1, 2, 3)`
+                        },
+                        {
+                            name: "count()",
+                            description: "Conta ocorrências de um valor na tupla",
+                            example: `tupla = (1, 2, 2, 3, 2)
+quantidade = tupla.count(2)
+# Resultado: 3`
+                        },
+                        {
+                            name: "index()",
+                            description: "Retorna índice da primeira ocorrência",
+                            example: `tupla = (10, 20, 30, 20)
+indice = tupla.index(20)
+# Resultado: 1`
+                        },
+                        {
+                            name: "Operador +",
+                            description: "Concatena duas tuplas",
+                            example: `tupla1 = (1, 2)
+tupla2 = (3, 4)
+resultado = tupla1 + tupla2
+# Resultado: (1, 2, 3, 4)`
+                        },
+                        {
+                            name: "Operador *",
+                            description: "Repete a tupla várias vezes",
+                            example: `tupla = (1, 2)
+resultado = tupla * 3
+# Resultado: (1, 2, 1, 2, 1, 2)`
+                        }
+                    ]
+                },
+                {
+                    id: "controle-fluxo",
+                    title: "Controle de Fluxo",
+                    description: "Estruturas condicionais e de repetição",
+                    level: "basic",
+                    methods: [
+                        {
+                            name: "if/elif/else",
+                            description: "Estruturas condicionais básicas",
+                            example: `idade = 18
+if idade < 12:
+    print("Criança")
+elif idade < 18:
+    print("Adolescente")
+else:
+    print("Adulto")`
+                        },
+                        {
+                            name: "for loop",
+                            description: "Iteração sobre sequências",
+                            example: `for i in range(5):
+    print(i)
+# Saída: 0 1 2 3 4
+
+frutas = ["maçã", "banana", "laranja"]
+for fruta in frutas:
+    print(fruta)`
+                        },
+                        {
+                            name: "while loop",
+                            description: "Loop baseado em condição",
+                            example: `contador = 0
+while contador < 5:
+    print(contador)
+    contador += 1
+# Saída: 0 1 2 3 4`
+                        },
+                        {
+                            name: "break",
+                            description: "Interrompe a execução do loop",
+                            example: `for i in range(10):
+    if i == 5:
+        break
+    print(i)
+# Saída: 0 1 2 3 4`
+                        },
+                        {
+                            name: "continue",
+                            description: "Pula para próxima iteração do loop",
+                            example: `for i in range(5):
+    if i == 2:
+        continue
+    print(i)
+# Saída: 0 1 3 4`
+                        }
+                    ]
+                }
+            ],
+            intermediate: [
+                {
+                    id: "funcoes",
+                    title: "Funções",
+                    description: "Definição e uso de funções",
+                    level: "intermediate",
+                    methods: [
+                        {
+                            name: "def",
+                            description: "Define uma nova função",
+                            example: `def saudacao(nome):
+    """Retorna uma saudação personalizada."""
+    return f"Olá, {nome}!"
+
+mensagem = saudacao("Maria")
+# Resultado: "Olá, Maria!"`
+                        },
+                        {
+                            name: "lambda",
+                            description: "Funções anônimas (inline)",
+                            example: `dobro = lambda x: x * 2
+resultado = dobro(5)
+# Resultado: 10
+
+# Uso comum com map e filter
+numeros = [1, 2, 3, 4]
+quadrados = list(map(lambda x: x**2, numeros))
+# Resultado: [1, 4, 9, 16]`
+                        },
+                        {
+                            name: "*args",
+                            description: "Parâmetros variáveis posicionais",
+                            example: `def soma_tudo(*args):
+    return sum(args)
+
+resultado = soma_tudo(1, 2, 3, 4, 5)
+# Resultado: 15`
+                        },
+                        {
+                            name: "**kwargs",
+                            description: "Parâmetros variáveis nomeados",
+                            example: `def exibir_info(**kwargs):
+    for chave, valor in kwargs.items():
+        print(f"{chave}: {valor}")
+
+exibir_info(nome="Carlos", idade=25, cidade="RJ")`
+                        },
+                        {
+                            name: "Funções de ordem superior",
+                            description: "Funções que recebem ou retornam funções",
+                            example: `def aplicar_funcao(func, valor):
+    return func(valor)
+
+def quadrado(x):
+    return x * x
+
+resultado = aplicar_funcao(quadrado, 5)
+# Resultado: 25`
+                        }
+                    ]
+                },
+                {
+                    id: "compreensoes",
+                    title: "Compreensões",
+                    description: "Sintaxe concisa para criação de coleções",
+                    level: "intermediate",
+                    methods: [
+                        {
+                            name: "List Comprehension",
+                            description: "Cria lista de forma concisa",
+                            example: `# Quadrados dos números pares de 0 a 9
+quadrados_pares = [x**2 for x in range(10) if x % 2 == 0]
+# Resultado: [0, 4, 16, 36, 64]`
+                        },
+                        {
+                            name: "Dict Comprehension",
+                            description: "Cria dicionário de forma concisa",
+                            example: `# Tabela de quadrados
+quadrados = {x: x**2 for x in range(5)}
+# Resultado: {0: 0, 1: 1, 2: 4, 3: 9, 4: 16}`
+                        },
+                        {
+                            name: "Set Comprehension",
+                            description: "Cria conjunto de forma concisa",
+                            example: `# Conjunto de letras únicas em uma string
+letras_unicas = {letra for letra in "abracadabra"}
+# Resultado: {'a', 'b', 'c', 'd', 'r'}`
+                        },
+                        {
+                            name: "Generator Expression",
+                            description: "Cria generator de forma concisa",
+                            example: `# Generator de quadrados
+quadrados_gen = (x**2 for x in range(5))
+
+for quadrado in quadrados_gen:
+    print(quadrado)
+# Saída: 0 1 4 9 16`
+                        },
+                        {
+                            name: "Compreensão aninhada",
+                            description: "Compreensões com múltiplos loops",
+                            example: `# Matriz 3x3 como lista de listas
+matriz = [[i * j for j in range(3)] for i in range(3)]
+# Resultado: [[0, 0, 0], [0, 1, 2], [0, 2, 4]]`
+                        }
+                    ]
+                },
+                {
+                    id: "manipulacao-arquivos",
+                    title: "Manipulação de Arquivos",
+                    description: "Leitura e escrita de arquivos",
+                    level: "intermediate",
+                    methods: [
+                        {
+                            name: "open()",
+                            description: "Abre um arquivo para leitura/escrita",
+                            example: `# Leitura de arquivo
+with open("dados.txt", "r", encoding="utf-8") as arquivo:
+    conteudo = arquivo.read()
+
+# Escrita em arquivo
+with open("saida.txt", "w") as arquivo:
+    arquivo.write("Olá, mundo!")`
+                        },
+                        {
+                            name: "read() / readlines()",
+                            description: "Métodos de leitura de arquivos",
+                            example: `# Ler todo o conteúdo
+with open("dados.txt", "r") as f:
+    conteudo = f.read()
+
+# Ler linha por linha
+with open("dados.txt", "r") as f:
+    linhas = f.readlines()
+    for linha in linhas:
+        print(linha.strip())`
+                        },
+                        {
+                            name: "write() / writelines()",
+                            description: "Métodos de escrita em arquivos",
+                            example: `# Escrever string
+with open("saida.txt", "w") as f:
+    f.write("Linha 1\\n")
+    f.write("Linha 2\\n")
+
+# Escrever lista de strings
+linhas = ["Linha 1\\n", "Linha 2\\n", "Linha 3\\n"]
+with open("saida.txt", "w") as f:
+    f.writelines(linhas)`
+                        },
+                        {
+                            name: "JSON",
+                            description: "Trabalhando com arquivos JSON",
+                            example: `import json
+
+# Escrever JSON
+dados = {"nome": "Ana", "idade": 30}
+with open("dados.json", "w") as f:
+    json.dump(dados, f, indent=2)
+
+# Ler JSON
+with open("dados.json", "r") as f:
+    dados_lidos = json.load(f)`
+                        },
+                        {
+                            name: "CSV",
+                            description: "Trabalhando com arquivos CSV",
+                            example: `import csv
+
+# Escrever CSV
+with open("dados.csv", "w", newline="") as f:
+    writer = csv.writer(f)
+    writer.writerow(["Nome", "Idade", "Cidade"])
+    writer.writerow(["Ana", 30, "SP"])
+    writer.writerow(["Carlos", 25, "RJ"])`
+                        }
+                    ]
+                },
+                {
+                    id: "modulos",
+                    title: "Módulos",
+                    description: "Importação e uso de módulos",
+                    level: "intermediate",
+                    methods: [
+                        {
+                            name: "import",
+                            description: "Importa um módulo inteiro",
+                            example: `import math
+
+# Usando funções do módulo
+raiz = math.sqrt(25)
+seno = math.sin(math.pi/2)`
+                        },
+                        {
+                            name: "from ... import",
+                            description: "Importa partes específicas de um módulo",
+                            example: `from math import sqrt, pi
+
+# Usando diretamente
+raiz = sqrt(25)
+area_circulo = pi * 5**2`
+                        },
+                        {
+                            name: "as (alias)",
+                            description: "Cria apelido para módulo ou função",
+                            example: `import numpy as np
+import pandas as pd
+from datetime import datetime as dt
+
+# Usando aliases
+array = np.array([1, 2, 3])
+data_atual = dt.now()`
+                        },
+                        {
+                            name: "__name__",
+                            description: "Identifica se o módulo é executado diretamente",
+                            example: `# Em um arquivo meu_modulo.py
+def main():
+    print("Executando como script principal")
+
+if __name__ == "__main__":
+    main()
+else:
+    print("Módulo importado")`
+                        },
+                        {
+                            name: "sys.path",
+                            description: "Caminhos de busca para importação",
+                            example: `import sys
+
+# Adicionar diretório ao PATH
+sys.path.append("/caminho/para/modulos")
+
+# Listar caminhos de busca
+for caminho in sys.path:
+    print(caminho)`
+                        }
+                    ]
+                },
+                {
+                    id: "tratamento-erros",
+                    title: "Tratamento de Erros",
+                    description: "Exceções e tratamento de erros",
+                    level: "intermediate",
+                    methods: [
+                        {
+                            name: "try/except",
+                            description: "Captura e trata exceções",
+                            example: `try:
+    numero = int(input("Digite um número: "))
+    resultado = 10 / numero
+except ValueError:
+    print("Erro: Valor inválido!")
+except ZeroDivisionError:
+    print("Erro: Divisão por zero!")
+else:
+    print(f"Resultado: {resultado}")
+finally:
+    print("Execução finalizada.")`
+                        },
+                        {
+                            name: "raise",
+                            description: "Levanta uma exceção manualmente",
+                            example: `def verificar_idade(idade):
+    if idade < 0:
+        raise ValueError("Idade não pode ser negativa")
+    if idade < 18:
+        raise PermissionError("Menor de idade não permitido")
+    return True`
+                        },
+                        {
+                            name: "Exception personalizada",
+                            description: "Cria exceções personalizadas",
+                            example: `class MeuErro(Exception):
+    def __init__(self, mensagem):
+        self.mensagem = mensagem
+        super().__init__(self.mensagem)
+
+try:
+    raise MeuErro("Algo deu errado!")
+except MeuErro as e:
+    print(f"Erro personalizado: {e}")`
+                        },
+                        {
+                            name: "assert",
+                            description: "Verifica condições durante desenvolvimento",
+                            example: `def dividir(a, b):
+    assert b != 0, "Divisor não pode ser zero"
+    return a / b
+
+resultado = dividir(10, 2)  # OK
+# resultado = dividir(10, 0)  # AssertionError`
+                        },
+                        {
+                            name: "with (context manager)",
+                            description: "Gerenciamento de recursos com contexto",
+                            example: `class GerenciadorArquivo:
+    def __init__(self, nome_arquivo):
+        self.nome_arquivo = nome_arquivo
+    
+    def __enter__(self):
+        self.arquivo = open(self.nome_arquivo, "r")
+        return self.arquivo
+    
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        self.arquivo.close()
+
+with GerenciadorArquivo("dados.txt") as f:
+    conteudo = f.read()`
+                        }
+                    ]
+                }
+            ],
+            advanced: [
+                {
+                    id: "decoradores",
+                    title: "Decoradores",
+                    description: "Modificadores de funções e classes",
+                    level: "advanced",
+                    methods: [
+                        {
+                            name: "@decorator",
+                            description: "Sintaxe de aplicação de decorador",
+                            example: `def meu_decorador(func):
+    def wrapper():
+        print("Antes da execução")
+        func()
+        print("Depois da execução")
+    return wrapper
+
+@meu_decorador
+def dizer_ola():
+    print("Olá!")
+
+dizer_ola()`
+                        },
+                        {
+                            name: "Decoradores com argumentos",
+                            description: "Decoradores que aceitam parâmetros",
+                            example: `def repetir(vezes):
+    def decorador(func):
+        def wrapper(*args, **kwargs):
+            for _ in range(vezes):
+                func(*args, **kwargs)
+        return wrapper
+    return decorador
+
+@repetir(vezes=3)
+def saudacao(nome):
+    print(f"Olá, {nome}!")
+
+saudacao("Maria")`
+                        },
+                        {
+                            name: "functools.wraps",
+                            description: "Preserva metadados da função original",
+                            example: `from functools import wraps
+
+def decorador(func):
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        """Wrapper function"""
+        return func(*args, **kwargs)
+    return wrapper
+
+@decorador
+def minha_funcao():
+    """Minha função original"""
+    pass
+
+print(minha_funcao.__name__)  # "minha_funcao"
+print(minha_funcao.__doc__)   # "Minha função original"`
+                        },
+                        {
+                            name: "@classmethod",
+                            description: "Método de classe (recebe cls)",
+                            example: `class MinhaClasse:
+    contador = 0
+    
+    def __init__(self):
+        MinhaClasse.contador += 1
+    
+    @classmethod
+    def get_contador(cls):
+        return cls.contador
+
+obj1 = MinhaClasse()
+obj2 = MinhaClasse()
+print(MinhaClasse.get_contador())  # 2`
+                        },
+                        {
+                            name: "@staticmethod",
+                            description: "Método estático (não recebe self nem cls)",
+                            example: `class Calculadora:
+    @staticmethod
+    def somar(a, b):
+        return a + b
+    
+    @staticmethod
+    def subtrair(a, b):
+        return a - b
+
+resultado = Calculadora.somar(10, 5)  # 15`
+                        }
+                    ]
+                },
+                {
+                    id: "generators",
+                    title: "Generators",
+                    description: "Funções geradoras e yield",
+                    level: "advanced",
+                    methods: [
+                        {
+                            name: "yield",
+                            description: "Produz valor e pausa execução",
+                            example: `def contador(maximo):
+    n = 0
+    while n < maximo:
+        yield n
+        n += 1
+
+# Uso do generator
+for numero in contador(5):
+    print(numero)
+# Saída: 0 1 2 3 4`
+                        },
+                        {
+                            name: "Generator Expression",
+                            description: "Sintaxe concisa para generators",
+                            example: `# Generator expression
+quadrados = (x**2 for x in range(5))
+
+# Consumindo valores
+print(next(quadrados))  # 0
+print(next(quadrados))  # 1
+print(list(quadrados))  # [4, 9, 16]`
+                        },
+                        {
+                            name: "send()",
+                            description: "Envia valores para o generator",
+                            example: `def acumulador():
+    total = 0
+    while True:
+        valor = yield total
+        if valor is None:
+            break
+        total += valor
+
+gen = acumulador()
+next(gen)  # Inicializa
+print(gen.send(10))  # 10
+print(gen.send(20))  # 30
+print(gen.send(5))   # 35`
+                        },
+                        {
+                            name: "yield from",
+                            description: "Delega para subgenerator",
+                            example: `def gerador1():
+    yield from range(3)
+    yield from "ABC"
+
+for item in gerador1():
+    print(item)
+# Saída: 0 1 2 A B C`
+                        },
+                        {
+                            name: "close()",
+                            description: "Fecha o generator",
+                            example: `def infinito():
+    n = 0
+    try:
+        while True:
+            yield n
+            n += 1
+    except GeneratorExit:
+        print("Generator fechado")
+
+gen = infinito()
+print(next(gen))  # 0
+print(next(gen))  # 1
+gen.close()       # Imprime: "Generator fechado"`
+                        }
+                    ]
+                },
+                {
+                    id: "metaprogramacao",
+                    title: "Metaprogramação",
+                    description: "Programação com metadados",
+                    level: "advanced",
+                    methods: [
+                        {
+                            name: "type() dinâmico",
+                            description: "Cria classes dinamicamente",
+                            example: `# Criando uma classe dinamicamente
+MinhaClasse = type('MinhaClasse', (), {
+    'valor': 42,
+    'imprimir': lambda self: print(f"Valor: {self.valor}")
+})
+
+obj = MinhaClasse()
+obj.imprimir()  # Valor: 42`
+                        },
+                        {
+                            name: "__new__",
+                            description: "Controla criação de instâncias",
+                            example: `class Singleton:
+    _instancia = None
+    
+    def __new__(cls, *args, **kwargs):
+        if not cls._instancia:
+            cls._instancia = super().__new__(cls)
+        return cls._instancia
+
+obj1 = Singleton()
+obj2 = Singleton()
+print(obj1 is obj2)  # True`
+                        },
+                        {
+                            name: "metaclass",
+                            description: "Classe de classes",
+                            example: `class MetaClasse(type):
+    def __new__(cls, nome, bases, dct):
+        dct['criado_por'] = 'MetaClasse'
+        return super().__new__(cls, nome, bases, dct)
+
+class MinhaClasse(metaclass=MetaClasse):
+    pass
+
+print(MinhaClasse.criado_por)  # 'MetaClasse'`
+                        },
+                        {
+                            name: "__getattr__",
+                            description: "Intercepta acesso a atributos inexistentes",
+                            example: `class DynamicObject:
+    def __getattr__(self, name):
+        if name.startswith('get_'):
+            def metodo():
+                return f"Chamou {name}"
+            return metodo
+        raise AttributeError(f"Atributo {name} não existe")
+
+obj = DynamicObject()
+print(obj.get_info())  # "Chamou get_info"`
+                        },
+                        {
+                            name: "descriptors",
+                            description: "Protocolo de descritores",
+                            example: `class Descritor:
+    def __get__(self, obj, objtype=None):
+        return f"Valor do {obj.__class__.__name__}"
+    
+    def __set__(self, obj, value):
+        print(f"Atribuindo {value}")
+
+class MinhaClasse:
+    atributo = Descritor()
+
+obj = MinhaClasse()
+print(obj.atributo)  # "Valor do MinhaClasse"`
+                        }
+                    ]
+                }
+            ],
+            tools: [
+                {
+                    id: "itertools",
+                    title: "itertools",
+                    description: "Iteradores eficientes e combinatórios",
+                    level: "tools",
+                    methods: [
+                        {
+                            name: "itertools.chain()",
+                            description: "Concatena múltiplos iteráveis",
+                            example: `import itertools
+
+lista1 = [1, 2, 3]
+lista2 = [4, 5, 6]
+resultado = list(itertools.chain(lista1, lista2))
+# Resultado: [1, 2, 3, 4, 5, 6]`
+                        },
+                        {
+                            name: "itertools.cycle()",
+                            description: "Cria iterador cíclico infinito",
+                            example: `import itertools
+
+ciclo = itertools.cycle(['A', 'B', 'C'])
+for i in range(5):
+    print(next(ciclo))
+# Saída: A B C A B`
+                        },
+                        {
+                            name: "itertools.combinations()",
+                            description: "Gera combinações sem repetição",
+                            example: `import itertools
+
+letras = ['A', 'B', 'C', 'D']
+combinacoes = list(itertools.combinations(letras, 2))
+# Resultado: [('A','B'), ('A','C'), ('A','D'), ('B','C'), ('B','D'), ('C','D')]`
+                        },
+                        {
+                            name: "itertools.permutations()",
+                            description: "Gera permutações",
+                            example: `import itertools
+
+letras = ['A', 'B', 'C']
+permutacoes = list(itertools.permutations(letras, 2))
+# Resultado: [('A','B'), ('A','C'), ('B','A'), ('B','C'), ('C','A'), ('C','B')]`
+                        },
+                        {
+                            name: "itertools.groupby()",
+                            description: "Agrupa elementos consecutivos iguais",
+                            example: `import itertools
+
+dados = [1, 1, 2, 2, 2, 3, 1, 1]
+for chave, grupo in itertools.groupby(dados):
+    print(f"{chave}: {list(grupo)}")
+# Saída: 1: [1,1], 2: [2,2,2], 3: [3], 1: [1,1]`
+                        }
+                    ]
+                },
+                {
+                    id: "collections",
+                    title: "collections",
+                    description: "Estruturas de dados especializadas",
+                    level: "tools",
+                    methods: [
+                        {
+                            name: "collections.Counter",
+                            description: "Contador de elementos hasháveis",
+                            example: `from collections import Counter
+
+texto = "abracadabra"
+contador = Counter(texto)
+print(contador)  # Counter({'a': 5, 'b': 2, 'r': 2, 'c': 1, 'd': 1})
+print(contador.most_common(2))  # [('a', 5), ('b', 2)]`
+                        },
+                        {
+                            name: "collections.defaultdict",
+                            description: "Dicionário com valor padrão",
+                            example: `from collections import defaultdict
+
+d = defaultdict(list)
+d['frutas'].append('maçã')
+d['frutas'].append('banana')
+d['vegetais'].append('cenoura')
+
+print(d['frutas'])  # ['maçã', 'banana']
+print(d['legumes'])  # [] (lista vazia)`
+                        },
+                        {
+                            name: "collections.deque",
+                            description: "Fila dupla de alta performance",
+                            example: `from collections import deque
+
+fila = deque([1, 2, 3])
+fila.append(4)        # adiciona no final
+fila.appendleft(0)    # adiciona no início
+print(fila)           # deque([0, 1, 2, 3, 4])
+
+fila.pop()            # remove do final
+fila.popleft()        # remove do início
+print(fila)           # deque([1, 2, 3])`
+                        },
+                        {
+                            name: "collections.namedtuple",
+                            description: "Tupla com campos nomeados",
+                            example: `from collections import namedtuple
+
+Ponto = namedtuple('Ponto', ['x', 'y'])
+p1 = Ponto(10, 20)
+p2 = Ponto(x=5, y=15)
+
+print(p1.x, p1.y)     # 10 20
+print(p2[0], p2[1])   # 5 15 (acesso por índice também)`
+                        },
+                        {
+                            name: "collections.OrderedDict",
+                            description: "Dicionário que mantém ordem de inserção",
+                            example: `from collections import OrderedDict
+
+d = OrderedDict()
+d['primeiro'] = 1
+d['segundo'] = 2
+d['terceiro'] = 3
+
+for chave, valor in d.items():
+    print(chave, valor)
+# Saída mantém ordem de inserção`
+                        }
+                    ]
+                },
+                {
+                    id: "functools",
+                    title: "functools",
+                    description: "Operações sobre funções",
+                    level: "tools",
+                    methods: [
+                        {
+                            name: "functools.partial",
+                            description: "Cria função com argumentos fixados",
+                            example: `from functools import partial
+
+def potencia(base, expoente):
+    return base ** expoente
+
+quadrado = partial(potencia, expoente=2)
+cubo = partial(potencia, expoente=3)
+
+print(quadrado(5))  # 25
+print(cubo(3))      # 27`
+                        },
+                        {
+                            name: "functools.lru_cache",
+                            description: "Cache de resultados com LRU",
+                            example: `from functools import lru_cache
+
+@lru_cache(maxsize=128)
+def fibonacci(n):
+    if n < 2:
+        return n
+    return fibonacci(n-1) + fibonacci(n-2)
+
+print(fibonacci(10))  # 55 (com cache)`
+                        },
+                        {
+                            name: "functools.reduce",
+                            description: "Aplica função cumulativamente",
+                            example: `from functools import reduce
+
+numeros = [1, 2, 3, 4, 5]
+soma = reduce(lambda x, y: x + y, numeros)
+produto = reduce(lambda x, y: x * y, numeros)
+
+print(soma)     # 15
+print(produto)  # 120`
+                        },
+                        {
+                            name: "functools.singledispatch",
+                            description: "Dispatch genérico por tipo",
+                            example: `from functools import singledispatch
+
+@singledispatch
+def processar(arg):
+    return f"Tipo não suportado: {type(arg)}"
+
+@processar.register(int)
+def _(arg):
+    return f"Inteiro: {arg}"
+
+@processar.register(str)
+def _(arg):
+    return f"String: {arg}"
+
+print(processar(10))   # "Inteiro: 10"
+print(processar("oi")) # "String: oi"`
+                        },
+                        {
+                            name: "functools.wraps",
+                            description: "Preserva metadados em decoradores",
+                            example: `from functools import wraps
+
+def decorador(func):
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        """Função wrapper"""
+        return func(*args, **kwargs)
+    return wrapper
+
+@decorador
+def minha_funcao():
+    """Documentação original"""
+    pass
+
+print(minha_funcao.__name__)  # "minha_funcao"
+print(minha_funcao.__doc__)   # "Documentação original"`
+                        }
+                    ]
+                },
+                {
+                    id: "dataclasses",
+                    title: "dataclasses",
+                    description: "Classes de dados automáticas (Python 3.7+)",
+                    level: "tools",
+                    methods: [
+                        {
+                            name: "@dataclass",
+                            description: "Decorador para classes de dados",
+                            example: `from dataclasses import dataclass
+
+@dataclass
+class Ponto:
+    x: int
+    y: int
+    nome: str = "origem"
+
+p1 = Ponto(10, 20)
+p2 = Ponto(10, 20, "ponto1")
+print(p1)      # Ponto(x=10, y=20, nome='origem')
+print(p1 == p2)  # False (nomes diferentes)`
+                        },
+                        {
+                            name: "field()",
+                            description: "Configura campos personalizados",
+                            example: `from dataclasses import dataclass, field
+from typing import List
+
+@dataclass
+class Pessoa:
+    nome: str
+    idade: int
+    emails: List[str] = field(default_factory=list)
+    ativo: bool = field(default=True, repr=False)
+
+p = Pessoa("Ana", 30)
+p.emails.append("ana@email.com")
+print(p)  # Pessoa(nome='Ana', idade=30, emails=['ana@email.com'])`
+                        },
+                        {
+                            name: "asdict() / astuple()",
+                            description: "Converte dataclass para dict/tuple",
+                            example: `from dataclasses import dataclass, asdict, astuple
+
+@dataclass
+class Ponto:
+    x: int
+    y: int
+
+p = Ponto(10, 20)
+print(asdict(p))   # {'x': 10, 'y': 20}
+print(astuple(p))  # (10, 20)`
+                        },
+                        {
+                            name: "replace()",
+                            description: "Cria cópia com campos modificados",
+                            example: `from dataclasses import dataclass, replace
+
+@dataclass(frozen=True)  # imutável
+class Ponto:
+    x: int
+    y: int
+
+p1 = Ponto(10, 20)
+p2 = replace(p1, x=15)  # novo objeto
+print(p1)  # Ponto(x=10, y=20)
+print(p2)  # Ponto(x=15, y=20)`
+                        },
+                        {
+                            name: "__post_init__",
+                            description: "Hook pós-inicialização",
+                            example: `from dataclasses import dataclass
+
+@dataclass
+class Retangulo:
+    largura: float
+    altura: float
+    area: float = 0.0
+    
+    def __post_init__(self):
+        self.area = self.largura * self.altura
+
+r = Retangulo(5.0, 3.0)
+print(r.area)  # 15.0`
+                        }
+                    ]
+                }
+            ]
+        };
+
+        // Utilitários
+        function highlightSyntax(code) {
+            return code
+                .replace(/(\bdef\b|\bclass\b|\bif\b|\belif\b|\belse\b|\bfor\b|\bwhile\b|\breturn\b|\bimport\b|\bfrom\b|\bas\b|\btry\b|\bexcept\b|\bfinally\b|\bwith\b|\byield\b|\bassert\b|\blambda\b)/g, '<span class="keyword">$1</span>')
+                .replace(/(\bprint\b|\bopen\b|\bint\b|\bstr\b|\blist\b|\bdict\b|\btuple\b|\bset\b|\brange\b|\blen\b|\bsum\b)/g, '<span class="builtin">$1</span>')
+                .replace(/(\w+)\(/g, '<span class="function">$1</span>(')
+                .replace(/(["'`].*?["'`])/g, '<span class="string">$1</span>')
+                .replace(/\b(\d+\.?\d*)\b/g, '<span class="number">$1</span>')
+                .replace(/#(.*)/g, '<span class="comment">#$1</span>');
+        }
+
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                showNotification("Código copiado para a área de transferência!");
+            }).catch(err => {
+                console.error('Falha ao copiar: ', err);
+                showNotification("Erro ao copiar código");
+            });
+        }
+
+        function showNotification(message) {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.classList.add('show');
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+
+        // Gerenciamento de estado
+        let currentLevel = 'basic';
+        let searchTerm = '';
+        let visibleCategories = cheatsheetData.basic;
+
+        // Inicialização
+        document.addEventListener('DOMContentLoaded', () => {
+            initializeSidebar();
+            renderCategories();
+            updateStats();
+            setupEventListeners();
+        });
+
+        function initializeSidebar() {
+            const categoryLinks = document.getElementById('category-links');
+            
+            // Gerar links para todas as categorias
+            Object.entries(cheatsheetData).forEach(([level, categories]) => {
+                categories.forEach(category => {
+                    const li = document.createElement('li');
+                    li.innerHTML = `
+                        <a href="#${category.id}" data-category="${category.id}" data-level="${level}">
+                            <i class="fas fa-code"></i> ${category.title}
+                        </a>
+                    `;
+                    categoryLinks.appendChild(li);
+                });
+            });
+            
+            // Ativar link da primeira categoria
+            const firstLink = categoryLinks.querySelector('a');
+            if (firstLink) {
+                firstLink.classList.add('active');
+            }
+        }
+
+        function renderCategories() {
+            const contentGrid = document.getElementById('content-grid');
+            contentGrid.innerHTML = '';
+            
+            let hasResults = false;
+            
+            // Filtrar categorias com base no nível e busca
+            const filteredCategories = visibleCategories.filter(category => {
+                const matchesSearch = searchTerm === '' || 
+                    category.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                    category.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                    category.methods.some(method => 
+                        method.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                        method.description.toLowerCase().includes(searchTerm.toLowerCase())
+                    );
+                
+                return matchesSearch;
+            });
+            
+            if (filteredCategories.length === 0) {
+                contentGrid.innerHTML = `
+                    <div class="no-results">
+                        <i class="fas fa-search fa-3x" style="margin-bottom: 1rem; opacity: 0.5;"></i>
+                        <h3>Nenhum resultado encontrado</h3>
+                        <p>Tente usar termos diferentes na busca</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            filteredCategories.forEach(category => {
+                hasResults = true;
+                const card = document.createElement('div');
+                card.className = 'category-card';
+                card.id = category.id;
+                
+                // Determinar classe do badge
+                let badgeClass = '';
+                switch(category.level) {
+                    case 'basic': badgeClass = 'basic-badge'; break;
+                    case 'intermediate': badgeClass = 'intermediate-badge'; break;
+                    case 'advanced': badgeClass = 'advanced-badge'; break;
+                    case 'tools': badgeClass = 'tools-badge'; break;
+                }
+                
+                // Gerar HTML dos métodos
+                let methodsHTML = '';
+                category.methods.forEach((method, index) => {
+                    const highlightedExample = highlightSyntax(method.example);
+                    methodsHTML += `
+                        <li class="method-item">
+                            <div class="method-name">
+                                ${method.name}
+                                <button class="copy-btn" data-code="${method.example.replace(/"/g, '&quot;')}">
+                                    <i class="far fa-copy"></i>
+                                </button>
+                            </div>
+                            <div class="method-description">${method.description}</div>
+                            <div class="method-example" id="example-${category.id}-${index}">
+                                <pre>${highlightedExample}</pre>
+                            </div>
+                        </li>
+                    `;
+                });
+                
+                card.innerHTML = `
+                    <div class="card-header">
+                        <div class="card-title">
+                            <h3>${category.title}</h3>
+                            <span class="level-badge ${badgeClass}">${category.level}</span>
+                        </div>
+                        <div class="card-description">${category.description}</div>
+                        <button class="toggle-examples-btn" data-category="${category.id}">
+                            <i class="fas fa-code"></i> Mostrar/Esconder Exemplos
+                        </button>
+                    </div>
+                    <div class="card-content">
+                        <ul class="methods-list">
+                            ${methodsHTML}
+                        </ul>
+                    </div>
+                `;
+                
+                contentGrid.appendChild(card);
+            });
+            
+            // Adicionar event listeners aos botões
+            document.querySelectorAll('.toggle-examples-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    const categoryId = this.dataset.category;
+                    const examples = document.querySelectorAll(`.method-example[id^="example-${categoryId}-"]`);
+                    const isShowing = examples[0] && examples[0].classList.contains('show');
+                    
+                    examples.forEach(example => {
+                        if (isShowing) {
+                            example.classList.remove('show');
+                        } else {
+                            example.classList.add('show');
+                        }
+                    });
+                    
+                    this.innerHTML = isShowing ? 
+                        '<i class="fas fa-code"></i> Mostrar Exemplos' : 
+                        '<i class="fas fa-eye-slash"></i> Esconder Exemplos';
+                });
+            });
+            
+            document.querySelectorAll('.copy-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    const code = this.dataset.code.replace(/&quot;/g, '"');
+                    copyToClipboard(code);
+                });
+            });
+        }
+
+        function updateStats() {
+            // Calcular totais
+            let totalMethods = 0;
+            let totalCategories = 0;
+            let totalExamples = 0;
+            
+            Object.values(cheatsheetData).forEach(categories => {
+                totalCategories += categories.length;
+                categories.forEach(category => {
+                    totalMethods += category.methods.length;
+                    totalExamples += category.methods.length;
+                });
+            });
+            
+            // Atualizar DOM
+            document.getElementById('total-methods').textContent = totalMethods;
+            document.getElementById('total-categories').textContent = totalCategories;
+            document.getElementById('total-examples').textContent = totalExamples;
+        }
+
+        function setupEventListeners() {
+            // Menu mobile
+            document.getElementById('mobile-menu-toggle').addEventListener('click', () => {
+                document.getElementById('sidebar').classList.toggle('active');
+            });
+            
+            // Filtros de nível
+            document.querySelectorAll('.level-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    // Remover active de todos
+                    document.querySelectorAll('.level-btn').forEach(btn => btn.classList.remove('active'));
+                    // Adicionar active ao clicado
+                    this.classList.add('active');
+                    // Atualizar nível atual
+                    currentLevel = this.dataset.level;
+                    // Atualizar categorias visíveis
+                    visibleCategories = cheatsheetData[currentLevel];
+                    // Atualizar links da sidebar
+                    updateSidebarLinks();
+                    // Renderizar categorias
+                    renderCategories();
+                });
+            });
+            
+            // Links da sidebar
+            document.querySelectorAll('#category-links a').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    // Remover active de todos
+                    document.querySelectorAll('#category-links a').forEach(a => a.classList.remove('active'));
+                    // Adicionar active ao clicado
+                    this.classList.add('active');
+                    
+                    const categoryId = this.dataset.category;
+                    const categoryLevel = this.dataset.level;
+                    
+                    // Atualizar nível se necessário
+                    if (categoryLevel !== currentLevel) {
+                        currentLevel = categoryLevel;
+                        visibleCategories = cheatsheetData[currentLevel];
+                        
+                        // Atualizar botões de nível
+                        document.querySelectorAll('.level-btn').forEach(btn => {
+                            btn.classList.remove('active');
+                            if (btn.dataset.level === currentLevel) {
+                                btn.classList.add('active');
+                            }
+                        });
+                    }
+                    
+                    // Renderizar categorias
+                    renderCategories();
+                    
+                    // Scroll para a categoria
+                    const element = document.getElementById(categoryId);
+                    if (element) {
+                        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                    
+                    // Fechar sidebar no mobile
+                    if (window.innerWidth < 992) {
+                        document.getElementById('sidebar').classList.remove('active');
+                    }
+                });
+            });
+            
+            // Busca
+            const searchInput = document.getElementById('search-input');
+            let searchTimeout;
+            
+            searchInput.addEventListener('input', function() {
+                clearTimeout(searchTimeout);
+                searchTimeout = setTimeout(() => {
+                    searchTerm = this.value.trim().toLowerCase();
+                    renderCategories();
+                }, 300);
+            });
+            
+            // Botão flutuante de cópia
+            document.getElementById('floating-copy').addEventListener('click', function() {
+                let allCode = '';
+                visibleCategories.forEach(category => {
+                    category.methods.forEach(method => {
+                        allCode += `# ${method.name}\n${method.example}\n\n`;
+                    });
+                });
+                copyToClipboard(allCode);
+            });
+            
+            // Fechar sidebar ao clicar fora (mobile)
+            document.addEventListener('click', (e) => {
+                const sidebar = document.getElementById('sidebar');
+                const menuToggle = document.getElementById('mobile-menu-toggle');
+                
+                if (sidebar.classList.contains('active') && 
+                    !sidebar.contains(e.target) && 
+                    !menuToggle.contains(e.target) &&
+                    window.innerWidth < 992) {
+                    sidebar.classList.remove('active');
+                }
+            });
+        }
+
+        function updateSidebarLinks() {
+            // Atualizar visibilidade dos links da sidebar
+            document.querySelectorAll('#category-links a').forEach(link => {
+                if (link.dataset.level === currentLevel) {
+                    link.style.display = 'block';
+                } else {
+                    link.style.display = 'none';
+                }
+            });
+            
+            // Ativar primeiro link visível
+            const firstVisibleLink = document.querySelector('#category-links a[style="display: block;"]');
+            if (firstVisibleLink) {
+                document.querySelectorAll('#category-links a').forEach(a => a.classList.remove('active'));
+                firstVisibleLink.classList.add('active');
+            }
+        }
+
+        // Inicializar com o nível básico
+        updateSidebarLinks();
+    </script>
+</body>
+</html>
